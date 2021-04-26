@@ -294,15 +294,15 @@ def ensure(  # noqa: C901 FIXME
                 raise ProvisionerError(f'no more tries for {name}')
 
 
-def run_subprocess_cmd(cmd, **kwargs):
+def run_subprocess_cmd(cmd, check=True, **kwargs):
     _kwargs = dict(
         universal_newlines=True,
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE
+        stderr=subprocess.PIPE,
+        check=check
     )
 
     _kwargs.update(kwargs)
-    _kwargs['check'] = True
 
     if isinstance(cmd, str):
         cmd = cmd.split()
@@ -408,7 +408,7 @@ def generate_random_secret():
     Generates a random 14 character password
     """
 
-    special_characters = '!#$%&-.@_'
+    special_characters = '=+-()_'
     passwd_seed = random.sample(string.ascii_uppercase,
                                 4) + random.sample(string.digits,
                                                    3) + random.sample(string.ascii_lowercase,
